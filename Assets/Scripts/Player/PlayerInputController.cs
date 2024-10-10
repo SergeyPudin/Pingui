@@ -3,17 +3,24 @@ using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(PlayerMover))]
 [RequireComponent (typeof(PlayerSpiner))]
+[RequireComponent(typeof(Attacker))]
 public class PlayerInputController : MonoBehaviour
 {
-    [SerializeField] private BulldogFish _weapon; // Сделать подругее
-
     private PlayerInput _playerInput;
+    private Palm _palm;
+    private Bulldog _bulldog;
+    private Attacker _attacker;
 
     private void Awake()
     {
         _playerInput = new();
+        _palm = GetComponent<Palm>();
+        _bulldog = GetComponent<Bulldog>();
+        _attacker = GetComponent<Attacker>();
         _playerInput.Player.Shoot.performed += OnShoot;
         _playerInput.Player.AlternativeShoot.performed += OnAlternativeShoot;
+        _playerInput.Player.PalmChoose.performed += GetPalm;
+        _playerInput.Player.BulldogChoose.performed += GetBulldog;
     }
 
     private void OnEnable()
@@ -43,11 +50,21 @@ public class PlayerInputController : MonoBehaviour
 
     private void OnShoot(InputAction.CallbackContext context)
     {
-        _weapon.Shoot();
+        _attacker.Shoot();
     }
 
     private void OnAlternativeShoot(InputAction.CallbackContext context)
     {
         Debug.Log("Alternative Shoot");
+    }
+
+    private void GetPalm(InputAction.CallbackContext context)
+    {
+        _bulldog.TryGetPalm();
+    }
+
+    private void GetBulldog(InputAction.CallbackContext context)
+    {
+        _palm.TrySetBulldog();
     }
 }

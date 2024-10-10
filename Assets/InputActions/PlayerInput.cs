@@ -62,6 +62,24 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PalmChoose"",
+                    ""type"": ""Button"",
+                    ""id"": ""180461c2-6843-4cfd-906f-2c6b50f0a1b5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""BulldogChoose"",
+                    ""type"": ""Button"",
+                    ""id"": ""b7aa195d-5ac8-4b43-a925-60dd75dda649"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -152,6 +170,28 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""AlternativeShoot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fe54ff64-acff-4068-be65-c9697238d950"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardAndMouse"",
+                    ""action"": ""PalmChoose"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""68339ef5-9365-4263-8cbe-05c3e5421c4e"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardAndMouse"",
+                    ""action"": ""BulldogChoose"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -181,6 +221,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_Player_Shoot = m_Player.FindAction("Shoot", throwIfNotFound: true);
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_AlternativeShoot = m_Player.FindAction("AlternativeShoot", throwIfNotFound: true);
+        m_Player_PalmChoose = m_Player.FindAction("PalmChoose", throwIfNotFound: true);
+        m_Player_BulldogChoose = m_Player.FindAction("BulldogChoose", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -246,6 +288,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Shoot;
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_AlternativeShoot;
+    private readonly InputAction m_Player_PalmChoose;
+    private readonly InputAction m_Player_BulldogChoose;
     public struct PlayerActions
     {
         private @PlayerInput m_Wrapper;
@@ -254,6 +298,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @Shoot => m_Wrapper.m_Player_Shoot;
         public InputAction @Look => m_Wrapper.m_Player_Look;
         public InputAction @AlternativeShoot => m_Wrapper.m_Player_AlternativeShoot;
+        public InputAction @PalmChoose => m_Wrapper.m_Player_PalmChoose;
+        public InputAction @BulldogChoose => m_Wrapper.m_Player_BulldogChoose;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -275,6 +321,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @AlternativeShoot.started += instance.OnAlternativeShoot;
             @AlternativeShoot.performed += instance.OnAlternativeShoot;
             @AlternativeShoot.canceled += instance.OnAlternativeShoot;
+            @PalmChoose.started += instance.OnPalmChoose;
+            @PalmChoose.performed += instance.OnPalmChoose;
+            @PalmChoose.canceled += instance.OnPalmChoose;
+            @BulldogChoose.started += instance.OnBulldogChoose;
+            @BulldogChoose.performed += instance.OnBulldogChoose;
+            @BulldogChoose.canceled += instance.OnBulldogChoose;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -291,6 +343,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @AlternativeShoot.started -= instance.OnAlternativeShoot;
             @AlternativeShoot.performed -= instance.OnAlternativeShoot;
             @AlternativeShoot.canceled -= instance.OnAlternativeShoot;
+            @PalmChoose.started -= instance.OnPalmChoose;
+            @PalmChoose.performed -= instance.OnPalmChoose;
+            @PalmChoose.canceled -= instance.OnPalmChoose;
+            @BulldogChoose.started -= instance.OnBulldogChoose;
+            @BulldogChoose.performed -= instance.OnBulldogChoose;
+            @BulldogChoose.canceled -= instance.OnBulldogChoose;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -323,5 +381,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnShoot(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
         void OnAlternativeShoot(InputAction.CallbackContext context);
+        void OnPalmChoose(InputAction.CallbackContext context);
+        void OnBulldogChoose(InputAction.CallbackContext context);
     }
 }

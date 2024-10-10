@@ -27,7 +27,6 @@ public class PlayerSpiner : MonoBehaviour
         _cameraTransform.localEulerAngles = Vector3.right * _cameraAngle;
 
         _transform.Rotate(Vector3.up * _horizontalTurnSensitivity * _playerInputController.GetDelta().x);
-        Debug.Log(_playerInputController.GetDelta().x);
     }
 
     public Vector3 GetDirectionForward()
